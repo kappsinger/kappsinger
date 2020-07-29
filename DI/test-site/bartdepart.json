@@ -1,6 +1,0 @@
-{
-    "eventName": "mars_weather",
-    "url": "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=balb&dir=n&key=ZG4L-PUQP-97LT-DWE9",
-    "requestType": "GET",
-    "mydevices": true
-}
