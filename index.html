@@ -9,13 +9,32 @@
 <style>
 	body { margin: 0; padding: 0; }
 	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+.mapboxgl-popup-content {
+	background-color: rgba(0,0,0,.5);
+  padding: 5%;
+	border: thin solid white;
+}
+
+.mapboxgl-container .leaflet-marker-icon {
+  cursor: pointer;
+}
+
+.mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
+  margin-top: 15px;
+}
+
+
+
 </style>
 </head>
 <body>
 <style>
 	.mapboxgl-popup {
 			max-width: 400px;
-			font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+			font: 12px/20px 'Source Code Pro Regular', Courier, Helvetica, sans-serif;
+			color:rgba(255, 255, 255, .9);
+
 	}
 </style>
 
@@ -24,13 +43,13 @@
 	mapboxgl.accessToken = 'pk.eyJ1Ijoia2FwcHNpbmdlciIsImEiOiJjazNvdzdsbTcyNWRwM2NwaHh1NDBwcW4wIn0.DFKct3jowLrHVz6TQxaGzg';
 var map = new mapboxgl.Map({
 container: 'map', // container id
-style: 'mapbox://styles/kappsinger/ckd7zsa3n08w31jo1t2bugg7k', // stylesheet location
+style: 'mapbox://styles/kappsinger/ckd95kw6u09s91jpfg9opacva', // stylesheet location
 center: [-72.92152, 41.31475], // starting position [lng, lat]
 zoom: 11.38 // starting zoom
 });
 map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
-    layers: ['nhv-cycle-crashes-2017-2020'] // replace this with the name of the layer
+    layers: ['cyclecrashes']['pedcrashes'] // replace this with the name of the layer
   });
 
   if (!features.length) {
@@ -41,7 +60,7 @@ map.on('click', function(e) {
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.title + '</h3><p>' + feature.properties.description + '</p>')
+    .setHTML('<h3>' + feature.properties.DateOfCrash + '</h3><p>' + feature.properties.MostSevereInjuryTextFormat + '</p>')
     .addTo(map);
 });
 </script>
