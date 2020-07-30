@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Display a map</title>
+<title>Safe Streets Mapping</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
@@ -13,6 +13,10 @@
 </head>
 <body>
 <style>
+	.mapboxgl-popup {
+			max-width: 400px;
+			font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	}
 </style>
 
 <div id="map"></div>
@@ -22,9 +26,25 @@ var map = new mapboxgl.Map({
 container: 'map', // container id
 style: 'mapbox://styles/kappsinger/ckd7zsa3n08w31jo1t2bugg7k', // stylesheet location
 center: [-72.92152, 41.31475], // starting position [lng, lat]
-zoom: 12.12 // starting zoom
+zoom: 11.38 // starting zoom
 });
+map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ['nhv-cycle-crashes-2017-2020', 'nhv-ped-crashes-2017-2020'] // replace this with the name of the layer
+  });
 
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    	//.setHTML('<h3>' + feature.properties.title + '</h3><p><a href="' + feature.properties.url + '">Click for more info.</a></p>')
+     .setHTML('<h3>' + feature.properties.Date-Of-Crash + '</h3><p>Built: ' + feature.properties.built + '<br>Address: ' + feature.properties.address + '<br>Status: ' + feature.properties.status + '<br><a href="' + feature.properties.url + '">Click for more info.</a></p>')
+    .addTo(map);
+});
 </script>
 
 </body>
