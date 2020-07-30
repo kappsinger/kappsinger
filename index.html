@@ -3,12 +3,30 @@
 <head>
 <meta charset="utf-8" />
 <title>Safe Streets Mapping</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
 <style>
 	body { margin: 0; padding: 0; }
 	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+h1 {
+	font-size: 18px;
+	line-height: 2px;
+	font-family: inherit;
+	font-weight: bold;
+}
+
+small {
+	font-size: 10px;
+	line-height: 10px;
+}
+
+.title{
+	position: fixed;
+	top: 0;
+	right: 0;
+}
 
 .mapboxgl-popup-content {
 	background-color: rgba(0,0,0,.5);
@@ -24,7 +42,66 @@
   margin-top: 15px;
 }
 
+.map-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.8);
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+  overflow: auto;
+  border-radius: 3px;
+}
 
+#title {
+  top: 0;
+	left: 0;
+  height: 125px;
+  margin-top: 20px;
+	margin-left: 20px;
+	padding: 10px;
+  width: 250px;
+
+}
+
+#legend {
+  padding: 10px;
+  line-height: 18px;
+  margin-bottom: 40px;
+  width: 100px;
+	border-radius: 7px;
+}
+
+.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  margin-right: 5px;
+}
+
+.cyclist {
+	display: inline-block;
+	background-color: #ff0f0f;
+	border-radius: 7px;
+	padding: 3px;
+	color: white;
+}
+
+.pedestrian {
+	display: inline-block;
+	background-color: rgba(0,0,0,0);
+	border-radius: 7px;
+	border: 2px solid #ff0f0f;
+	padding: 3px;
+}
+
+.lane {
+	display: inline-block;
+	background-color: rgba(0,0,0,0);
+	border-radius: 7px;
+	border: 2px solid #74ff29;
+	padding: 3px;
+}
 
 </style>
 </head>
@@ -34,11 +111,24 @@
 			max-width: 400px;
 			font: 12px/20px 'Source Code Pro Regular', Courier, Helvetica, sans-serif;
 			color:rgba(255, 255, 255, .9);
-
 	}
+
+
 </style>
 
 <div id="map"></div>
+
+<div class='map-overlay' id='title'><h1>We need safer streets.</h1>
+<br>Each dot represents a cyclist or pedestrian that was hit by a car from 2017–2020 in New Haven.<br>
+<small>Source: UCONN CT Crash Data Repository</small></div>
+
+<div class='map-overlay' id='legend'>
+<div class='cyclist'>cyclist</div><br><br>
+<div class='pedestrian'>pedestrian</div><br><br>
+<div class='lane'>bike lane</div><br>
+</div>
+
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoia2FwcHNpbmdlciIsImEiOiJjazNvdzdsbTcyNWRwM2NwaHh1NDBwcW4wIn0.DFKct3jowLrHVz6TQxaGzg';
 var map = new mapboxgl.Map({
@@ -47,6 +137,7 @@ style: 'mapbox://styles/kappsinger/ckd95kw6u09s91jpfg9opacva', // stylesheet loc
 center: [-72.92152, 41.31475], // starting position [lng, lat]
 zoom: 11.38 // starting zoom
 });
+
 map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
     layers: ['cyclecrashes']['pedcrashes'] // replace this with the name of the layer
