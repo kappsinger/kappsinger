@@ -30,7 +30,7 @@ zoom: 11.38 // starting zoom
 });
 map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
-    layers: ['nhv-cycle-crashes-2017-2020', 'nhv-ped-crashes-2017-2020'] // replace this with the name of the layer
+    layers: ['nhv-cycle-crashes-2017-2020'] // replace this with the name of the layer
   });
 
   if (!features.length) {
@@ -41,8 +41,7 @@ map.on('click', function(e) {
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    	//.setHTML('<h3>' + feature.properties.title + '</h3><p><a href="' + feature.properties.url + '">Click for more info.</a></p>')
-     .setHTML('<h3>' + feature.properties.Date-Of-Crash + '</h3><p>Built: ' + feature.properties.built + '<br>Address: ' + feature.properties.address + '<br>Status: ' + feature.properties.status + '<br><a href="' + feature.properties.url + '">Click for more info.</a></p>')
+    .setHTML('<h3>' + feature.properties.title + '</h3><p>' + feature.properties.description + '</p>')
     .addTo(map);
 });
 </script>
