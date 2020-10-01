@@ -4,9 +4,6 @@
 <meta charset="utf-8" />
 <title>Safe Streets Mapping</title>
 <link href="StyleSheet.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
@@ -18,31 +15,13 @@
 </div>
 
 <div class='map-overlay' id='title'><h1>We need safer streets.</h1>
-<br>Each dot represents a cyclist or pedestrian that was hit or killed by a car from 2015–2020 in New Haven. Click on a dot to learn more.<br>
+<br>Each dot represents a cyclist or pedestrian that was hit by a car from 2017–2020 in New Haven. Click on a dot to learn more.<br>
 <small>Source: UCONN CT Crash Data Repository</small></div>
 
 <div class='map-overlay' id='legend'>
-<table>
-	<tr>
-		<td><img class='icon' src="legendicons/cyclekill.png"></td>
-		<td>cyclist killed</td>
-	</tr>
-	<tr>
-		<td><img class='icon' src="legendicons/cyclehit.png"></td>
-		<td>cyclist hit</td>
-	</tr>
-	<tr>
-		<td><img class='icon' src="legendicons/pedkill.png"></td>
-		<td>pedestrian killed</td>
-	</tr>
-	<tr>
-		<td><img class='icon' src="legendicons/pedhit.png"></td>
-		<td>pedestrian hit</td>
-	</tr>
-	<tr>
-		<td><img class='icon' src="legendicons/lane.png"></td>
-		<td>bike lane</td>
-	</tr>
+<div class='cyclist'>cyclist</div><br><br>
+<div class='pedestrian'>pedestrian</div><br><br>
+<div class='lane'>bike lane</div><br>
 </div>
 
 
@@ -50,14 +29,14 @@
 	mapboxgl.accessToken = 'pk.eyJ1Ijoia2FwcHNpbmdlciIsImEiOiJjazNvdzdsbTcyNWRwM2NwaHh1NDBwcW4wIn0.DFKct3jowLrHVz6TQxaGzg';
 var map = new mapboxgl.Map({
 container: 'map', // container id
-style: 'mapbox://styles/kappsinger/ckfpx3nhi1d2m19pic1s7oh5s', // stylesheet location
+style: 'mapbox://styles/kappsinger/ckd95kw6u09s91jpfg9opacva', // stylesheet location
 center: [-72.92152, 41.31475], // starting position [lng, lat]
 zoom: 11.38 // starting zoom
 });
 
 map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
-    layers: ['ped-deaths']['cyc-deaths']['ped-collision']['cyc-collision'] // replace this with the name of the layer
+    layers: ['cyclecrashes']['pedcrashes'] // replace this with the name of the layer
   });
 
   if (!features.length) {
@@ -71,7 +50,6 @@ map.on('click', function(e) {
     .setHTML('<h3>' + feature.properties.DateOfCrash + '</h3><p>' + feature.properties.MostSevereInjuryTextFormat + '</p>')
     .addTo(map);
 });
-
 </script>
 
 </body>
