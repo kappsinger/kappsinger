@@ -6,6 +6,7 @@
 <link href="StyleSheet.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="legendicons/cyclehit.png" type="image" sizes="32x32">
 
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
@@ -17,14 +18,14 @@
 <div id="map"></div>
 </div>
 
-<div class='map-overlay' id='title'><h1>We need safer streets.</h1>
+<div class='map-overlay blur' id='title'><h1>We need safer streets.</h1>
 <br>Each dot represents a cyclist or pedestrian that was hit or killed by a car since 2015 in New Haven.<br>
 <small>Source: UCONN CT Crash Data Repository, OpenStreetMap</small></div>
 
-<div class='map-overlay' id='legend'>
+<div class='map-overlay blur' id='legend'>
 <table>
 	<tr>
-		<td><img class='icon' src="legendicons/cyclekill.png"></td>
+		<td><img class='icon' src="legendicons/cyclekill-white.png"></td>
 		<td>cyclist killed</td>
 	</tr>
 	<tr>
@@ -32,7 +33,7 @@
 		<td>cyclist hit</td>
 	</tr>
 	<tr>
-		<td><img class='icon' src="legendicons/pedkill.png"></td>
+		<td><img class='icon' src="legendicons/pedkill-white.png"></td>
 		<td>pedestrian killed</td>
 	</tr>
 	<tr>
@@ -54,6 +55,9 @@ style: 'mapbox://styles/kappsinger/ckfpx3nhi1d2m19pic1s7oh5s', // stylesheet loc
 center: [-72.92152, 41.31475], // starting position [lng, lat]
 zoom: 11.38 // starting zoom
 });
+
+map.addControl(new mapboxgl.NavigationControl());
+
 </script>
 
 </body>
